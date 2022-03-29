@@ -42,13 +42,15 @@ class UnitCirclePlot(AnimBase):
         self.ax.set_xlim([-2.5, 2.5])
         self.ax.set_ylim([-2.5, 2.5])
 
-    def plot_graph(self):    
-        self.circleLine, = self.ax.plot([], [],linewidth=4)
-        self.circleDot, = self.ax.plot([], [], 'o', color='black')
+    def plot_graph(self):   
+        self.ax.plot(np.cos(self.x), self.y)
+        self.circ_dot, = self.ax.plot([], [], 'o', color='black')
+        self.circ_line, = self.ax.plot([], [], color='black')
 
     def __animation_func(self, i):
-        self.circleLine.set_data(np.cos(self.x[:i]), np.sin(self.x[:i]))
-        self.circleDot.set_data(np.cos(self.x[i]), np.sin(self.x[i]))
+        # arrow
+        self.circ_line.set_data([0, np.cos(self.x[i])], [0, self.y[i]])
+        self.circ_dot.set_data(np.cos(self.x[i]), self.y[i])
         
     def start_animation(self):    
         anim = animation.FuncAnimation(self.fig, self.__animation_func, frames=len(self.x), interval=50)
@@ -56,11 +58,11 @@ class UnitCirclePlot(AnimBase):
 
 
 if __name__ == "__main__":
-    # sine wave
-    plotsin = SinPlot()
-    # prepare plot
-    plotsin.plot_graph()
-    ani = plotsin.start_animation()
+    # # sine wave
+    # plotsin = SinPlot()
+    # # prepare plot
+    # plotsin.plot_graph()
+    # ani = plotsin.start_animation()
 
     # unitcircle
     plotcirc = UnitCirclePlot()
